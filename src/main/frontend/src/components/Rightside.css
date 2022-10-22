@@ -1,0 +1,9 @@
+.right-canvas {
+  margin: 0;
+  height: 100%;
+  grid-column: 2 / 2;
+  grid-row: 2 / 4;
+  display: inline-grid;
+  grid-template-columns: 80px 1fr 80px;
+  grid-template-rows: 80px 1fr 80px;
+}

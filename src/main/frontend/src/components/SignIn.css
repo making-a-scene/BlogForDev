@@ -1,0 +1,15 @@
+
+
+#root > div > div.right-canvas > form > input:nth-child(2) {
+  margin-bottom: 4em;
+}
+
+#root > div > div.right-canvas > form > a {
+  margin-top: 5px;
+  text-align: right;
+}
+
+img {
+  width: inherit;
+  height: inherit;
+}

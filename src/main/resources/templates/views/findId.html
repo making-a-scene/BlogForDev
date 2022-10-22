@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title> 아이디 찾기 </title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <base href="/"/>
+</head>
+<body>
+    <p> 가입한 아이디를 찾기 위해 이름을 입력해주세요 </p>
+    <label for="findId"> 이름 : </label>
+    <input type="text" id="findId" name="findId" required/>
+    <button th:onclick="findId()"> 찾기 </button>
+    <span id="result"></span>
+
+<script type="text/javascript">
+    function findId(){
+    let name = document.getElementById("findId").value;
+    const url = "/findId/"+name;
+    $.ajax({
+    type:'get',
+    url:url,
+    data:name,
+    success: function(res) {
+
+        let result = document.getElementById("result");
+        result.innerHTML = JSON.stringify(res);
+    },
+    contentType:"application/JSON; charset=UTF-8"
+    }).fail(function (error){
+    let result = document.getElementById("result");
+    result.innerHTML = "등록된 아이디가 없습니다."
+    });
+    }
+</script>
+</body>
+</html>

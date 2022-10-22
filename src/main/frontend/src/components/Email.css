@@ -1,0 +1,16 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.topic {
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 5px;
+}

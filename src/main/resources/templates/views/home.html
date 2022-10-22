@@ -1,0 +1,47 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>소셜로그인 화면</title>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width"/>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<<<<<<< HEAD
+</head>
+<body>
+=======
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <meta name="_csrf" th:content="${_csrf.token}">
+</head>
+<body>
+<div sec:authorize="hasRole('USER')">
+  <script>
+    window.location.href="/social/loginSuccess";
+  </script>
+    <b>Authenticated DTO:</b>
+    <div sec:authentication="principal"></div>
+
+    <!--인증시 사용된 객체의 Username (ID)-->
+    <b>Authenticated username:</b>
+    <div sec:authentication="name"></div>
+
+    <!--객체의 권한-->
+    <b>Authenticated user role:</b>
+    <div sec:authentication="principal.authorities"></div>
+  </div>
+</div>
+
+>>>>>>> origin/postlist
+  <div>
+    <a th:href="@{/social}"> 소셜로그인으로 회원가입</a>
+    <br>
+    <a th:href="@{/social}"> 소셜로그인으로 로그인</a>
+<<<<<<< HEAD
+    <br>
+    <a th:href="@{/findId}"> 아이디 찾기</a>
+=======
+>>>>>>> origin/postlist
+  </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>소셜로그인 화면</title>
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width"/>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+  <base href="/"/>
+<<<<<<< HEAD
+=======
+  <meta name="_csrf_header" th:content="${_csrf.headerName}">
+  <meta name="_csrf" th:content="${_csrf.token}">
+>>>>>>> origin/postlist
+</head>
+<h1> 신규 회원 </h1>
+
+<div sec:authorize="hasRole('NEW')">
+
+    <label for="nickname">사용할 닉네임을 작성해주세요 : </label>
+    <input type="text" th:placeholder="${name}" id="nickname" name="nickname" required/>
+
+    <label for="nameForBlog">사용할 블로그 제목을 작성해주세요 : </label>
+    <input type="text" th:placeholder="${name}+'님의 블로그'" id="nameForBlog" name="blogname" required/>
+
+    <button type="submit" th:onclick="save()">저장하기</button>
+</div>
+
+<script type="text/javascript">
+
+function save(){
+let nameForBlog = document.getElementById('nameForBlog').value;
+let nickname = document.getElementById('nickname').value;
+
+let allData = {"blogname":nameForBlog, "nickname" : nickname};
+
+const url = "/social/saveAccountInfo";
+<<<<<<< HEAD
+=======
+var header = $("meta[name='_csrf_header']").attr('content');
+var token = $("meta[name='_csrf']").attr('content');
+>>>>>>> origin/postlist
+$.ajax({
+type:'POST',
+url:url,
+data:JSON.stringify(allData),
+<<<<<<< HEAD
+=======
+beforeSend: function(xhr){
+    xhr.setRequestHeader(header, token);
+},
+>>>>>>> origin/postlist
+success: function(res) {
+    console.log(res);
+},
+dataType:"json",
+contentType : "application/json;charset=UTF-8",
+}).done(function() {
+alert('회원 가입이 완료되었습니다! 로그인 하러 가볼까요? ');
+window.location.href = '/';
+}).fail(function (error){
+alert(JSON.stringify(error));
+});
+
+}
+
+</script>
+</body>
+</html>

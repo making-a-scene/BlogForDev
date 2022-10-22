@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세 페이지</title>
+</head>
+<body>
+
+<h1 th:text="${posts.title}"></h1>
+<p th:text="${posts.author}"></p>
+<p th:text="${posts.content}"></p>
+
+<a th:href="@{/posts/edit/{id}(id=${posts.id})}">글 수정</a>
+<a th:href="@{/posts/delete/{id}(id=${posts.id})}">글 삭제</a>
+<a th:href="@{/posts/list}">리스트로 돌아가기</a>
+<br><br>
+
+
+<form th:action="@{/comments/save/{id}(id=${posts.id})}" method="post">
+    <input type="text" id="uploader" name="uploader"><br>
+    <input type="text" id="content" name="content">
+    <button type="submit">등록</button>
+</form>
+
+<span th:if="${!isExist}">댓글이 없습니다.</span>
+
+<tr th:if="${isExist}" th:each="comments : ${comments}">
+    <td th:text="${comments.uploader}"></td><br>
+    <td th:text="${comments.content}"></td>
+    <a th:href="@{/comments/delete/{id}(id=${comments.id})}">삭제</a>
+    <br><br><br>
+</tr>
+
+<th:block th:if="${isExist}">
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/posts/view(id=${posts.id})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:href="@{/posts/view(id=${posts.id})}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+</th:block>
+</body>
+</html>

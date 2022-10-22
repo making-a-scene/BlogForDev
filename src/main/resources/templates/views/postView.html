@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+<h1> 글쓰기 </h1>
+    <label for="title"> 제목 : </label>
+    <input id="title" name="title" placeholder="타이틀"/><br>
+
+    <div class="editor-menu">
+        <button id="btn-image">
+            IMG
+        </button>
+    </div>
+
+    <div id="content" contenteditable="true">
+    </div>
+
+    <input type="file" id="fileItem" name="uploadFile" multiple="multiple">
+
+    <label for="author"> 작성자: </label>
+    <input id="author" name="author">
+    <button onclick="save()">save</button>
+</body>
+<script type="text/javascript">
+
+
+    let fileStorage = [];
+
+    const btnImage = document.getElementById('btn-image');
+    const imageSelector = document.getElementById('fileItem');
+
+    function focusEditor() {
+        content.focus({preventScroll: true});
+    }
+
+    btnImage.addEventListener('click', function () {
+        imageSelector.click();
+    });
+
+     imageSelector.addEventListener('change', function (e) {
+        const files = e.target.files;
+        if (!!files) {
+            insertImageDate(files[0]);
+        }
+    });
+
+    function insertImageDate(file) {
+        const reader = new FileReader();
+        reader.addEventListener('load', function (e) {
+            focusEditor();
+            document.execCommand('insertImage', false, `${reader.result}`);
+        });
+        reader.readAsDataURL(file);
+        fileStorage.push(file);
+    }
+
+    let fileName=[];
+
+    function save(){
+        let title = document.getElementById('title').value;
+        let contenteditable = document.querySelector('[contenteditable]');
+        let content = contenteditable.textContent;
+        let author = document.getElementById('author').value;
+
+        console.log(title)
+        console.log(content)
+        console.log(author)
+        console.log(fileStorage)
+
+        let formData = new FormData();
+
+        for (var i=0;i<fileStorage.length;i++){
+            var file = fileStorage[i];
+            console.log(file.name);
+            fileName.push(file.name);
+            formData.append("uploadFile",file)
+        }
+
+        let data ={
+            "title":title,
+            "content":content,
+            "author":author,
+            "fileName":fileName,
+        }
+
+        console.log(fileName)
+
+        const url = "/posts";
+        const ImageUrl = "/posts/addImage";
+
+         $.ajax({
+           type:'POST',
+           url:ImageUrl,
+           data:formData,
+           processData : false,
+    	contentType : false,
+    	data : formData,
+    	type : 'POST',
+    	dataType : 'json',
+    	success: function(res) {
+           console.log(res);
+            }
+           });
+
+        $.ajax({
+            type:'POST',
+            url:url,
+            data:JSON.stringify(data),
+            success: function(res) {
+            console.log(res);
+             },
+            contentType: 'application/json; charset=utf-8'
+            }).done(function() {
+            alert('글이 등록되었습니다 ');
+            }).fail(function (error){
+            alert(JSON.stringify(error));
+            });
+        }
+</script>
+</html>

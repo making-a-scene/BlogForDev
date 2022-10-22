@@ -1,0 +1,24 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>edit post</title>
+</head>
+<body>
+<div class="layout">
+    <form th:action="@{/posts/saveedit/{id}(id=${posts.id})}" method="post">
+
+        <label for="title">title</label>
+        <input id="title" name="title" type="text" th:value="${posts.title}">
+        <br>
+
+        <textarea id="content" name="content" th:text="${posts.content}"></textarea>
+        <br>
+
+        <button type="submit">수정</button>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>post list</title>
+</head>
+
+<style>
+  .layout {
+      width : 500px;
+      margin : 0 auto;
+      margin-top : 40px;
+  }
+</style>
+
+<body>
+    <div class="layout">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>글번호</th>
+                    <th>글제목</th>
+                    <th>글쓴이</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="posts : ${list}">
+                    <td th:text="${posts.id}"></td>
+                    <td>
+                        <a th:text="${posts.title}" th:href="@{/posts/view(id=${posts.id})}"></a>
+                    </td>
+                    <td th:text="${posts.author}"></td>
+               </tr>
+            </tbody>
+        </table>
+
+        <!-- 페이지 숫자 -->
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != currPage}" th:href="@{/posts/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+        </th:block>
+
+
+
+        <form th:action="@{list}" method="get">
+            <select th:name = "searchType">
+                <option value="all" selected>전체</option>
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+            </select>
+
+            <input type="text" th:name="searchKeyword">
+            <button type="submit">검색</button>
+        </form>
+
+        <a th:href="@{/posts/new}">글 작성</a>
+    </div>
+
+</body>
+</html>
